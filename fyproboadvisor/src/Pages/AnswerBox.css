@@ -1,0 +1,45 @@
+.Answerbox{
+    /* background-color: darkgray; */
+    width: 100%;
+    height: 5%;
+    position: fixed;
+    left: 0;
+    bottom: 20px;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    resize: none;
+}
+
+.ansflex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    background-color: white;
+    border-radius: 10px;
+
+    width: 800px;
+}
+
+.anstext{
+    /* height: 70%; */
+    padding-top: 10px;
+    width: 750px;
+    font-size: large;
+    border: 0;
+    padding: 5px;
+    padding-inline: 15px;
+    display: block;
+    min-height: 40px;
+    line-height: 20px;
+    overflow:hidden;
+    height:10px;
+    resize: none;
+}
+
+.anstext:focus {
+    outline: none;
+  }

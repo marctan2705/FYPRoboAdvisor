@@ -1,0 +1,89 @@
+
+.login-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 500px;
+    width: 50%;
+    border-radius: 10px 10px;
+    box-shadow: 5px;
+    background-color: none;
+    animation: fadeIn 2s ease-in-out;
+}
+@keyframes fadeIn {  
+    from {  
+        opacity:0;  
+    }  
+ 
+    to {  
+        opacity:1;  
+    }  
+ }
+
+
+.input-login{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    width: 320px;
+}
+
+.login-input-wrap{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-around;
+    height: 185px; 
+    width: 700px;
+}
+
+.signup-input-wrap{
+    height: 300px;
+}
+
+.login-button{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+    width: 250px;
+    background-color: rgb(20, 206, 20);
+    color: white;
+    border-radius: 5px;
+
+}
+
+.login-line{
+    width: 300px;
+}
+
+.signup-switch{
+    display: flex;
+    justify-content: center;
+    color: white;
+    margin-top: 10px;
+
+}
+
+.sl-switch{
+    text-decoration: underline;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+.input-login-false{
+    border-color: red;
+}
+
+.title-medium{
+    font-size: 50px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.error{
+    color: red;
+}

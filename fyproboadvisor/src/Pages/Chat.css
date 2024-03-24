@@ -1,0 +1,106 @@
+.chat{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+.chat-content{
+    background-color: hsl(0, 1%, 23%);
+    height: 100%;
+    width: 100%;
+    /* padding: 50px; */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;                                                                                                                                        
+    overflow: hidden;
+}
+.chat-input{
+    width: 80%;
+    height: 30px;
+    padding: 10px;
+    padding-bottom: 0;
+    font-size: large;
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    bottom: 20px;
+    border-radius: 10px;
+    resize: none;
+}
+.message-box{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 90%;
+    overflow: scroll;
+}
+.message-box::-webkit-scrollbar {
+    display: none;
+  }
+.message-area-user{
+    width: 100%;
+    color: white;
+    padding-top:20px;
+    padding-bottom: 20px;
+    font-size: large;
+    display: flex;
+    align-items: end;
+
+}
+.message-area-chatbot{
+    width: 100%;
+    color: white;
+    padding-top:20px;
+    padding-bottom: 20px;
+    font-size: large;
+    display: flex;
+    align-items: end;
+}
+.message-icon{
+    height: 70px;
+}
+.message-icon-robot{
+    height: 70px;
+    width: 75px;
+}
+.message-content-user{
+    padding: 30px;
+    width: 80%;
+    margin-left: 10px;
+    animation: 
+    typing 3.5s steps(40, end),
+    blink-caret .75s step-end infinite;
+    white-space:pre-wrap;
+    font-size: 15px;
+    background-color: rgb(52, 167, 255);
+    color: white;
+    border-radius: 12px;
+
+}
+.message-content-chatbot{
+    padding: 30px;
+    width: 80%;
+    margin-right: 10px;
+    animation: 
+    typing 3.5s steps(40, end),
+    blink-caret .75s step-end infinite;
+    white-space:pre-wrap;
+    font-size: 15px;
+    background-color: rgb(14, 89, 147);
+    color: white;
+    border-radius: 12px;
+
+}
+.message-divider{
+    background-color: rgba(249, 241, 241, 0.603);
+    width: 100%;
+}
+.portfolio-holder{
+    border: 1px solid white;
+    padding: 20px;
+}
+
+.info-card{
+    border: 1px solid white;
+    padding: 20px;
+}

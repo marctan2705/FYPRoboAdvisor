@@ -10,6 +10,8 @@ import yfinance as yf
 from datetime import date
 from pypfopt import risk_models, BlackLittermanModel, DiscreteAllocation
 from pypfopt import EfficientFrontier, objective_functions, black_litterman
+from typing import List, Tuple, Dict, Union, Optional
+
 # print("hi")
 
 def getBL(portfolio, views, confidence):
@@ -52,5 +54,10 @@ def getDelta(market_prices):
     delta = black_litterman.market_implied_risk_aversion(market_prices)
     return delta
 
-eff = effFrontier(getBL(["AAPL", "TSLA"], {"AAPL": 1.0, "TSLA": 2.0}, [(0,2), (1,2)]))
-print(eff)
+def getOptimal(portfolio, views, confidence):
+    # print("parameters ->>>>> ", parameters)
+    # print("next")
+    #  portfolio: List[str], views: Dict[str, float], confidence: List[Tuple[float, float]]
+    return effFrontier(getBL(portfolio, views, confidence))
+# eff = effFrontier(getBL(["AAPL", "TSLA"], {"AAPL": 1.0, "TSLA": 2.0}, [(0,2), (1,2)]))
+# print(eff)

@@ -1,0 +1,9 @@
+.querycard{
+    height: auto;
+    border: 2px solid black;
+    width: 90%;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top:10px
+}

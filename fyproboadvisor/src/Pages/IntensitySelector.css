@@ -1,0 +1,35 @@
+.option{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    border-color: lightgray;
+    font-weight: bold;
+    border-right: 1px solid black;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+.high{
+    border-right: 0px;
+}
+
+.set-low{
+    background-color: green;
+}
+
+.set-med{
+    background-color: yellow;
+}
+
+.set-high{
+    background-color: red;
+}
+.question-option-box{
+    display: flex;
+    align-items: left;
+
+}

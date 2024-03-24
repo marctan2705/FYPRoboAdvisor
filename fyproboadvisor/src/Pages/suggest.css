@@ -1,0 +1,11 @@
+.suggesttitle{
+    padding-top: 100px;
+    padding-left: 20px;
+}
+.queryholder{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    font-weight: bold;
+}

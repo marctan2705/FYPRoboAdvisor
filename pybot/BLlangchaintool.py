@@ -4,64 +4,38 @@ import yfinance as yf
 from datetime import datetime
 from pypfopt import risk_models, BlackLittermanModel, EfficientFrontier
 from pypfopt import objective_functions, black_litterman
+import json
+from langchain_core.utils.function_calling import convert_to_openai_tool
+from langchain.tools import BaseTool
 
-class PortfolioOptimizerBL:
-    """
-    This class provides functionality to optimize a portfolio using the Black-Litterman model
-    and Efficient Frontier optimization.
-    """
-    def __init__(self, portfolio, views, confidence, start_date='2018-01-01'):
-        self.portfolio = portfolio
-        self.views = views
-        self.confidence = confidence
-        self.start_date = start_date
-        self.end_date = datetime.today().strftime('%Y-%m-%d')
-        self.market_prices = None
-        self.portfolio_prices = None
-        self.mcaps = {}
-        self.sigma = None
-        self.delta = None
-        self.bl = None
+from typing import List, Tuple, Dict, Union, Optional
 
-    def download_data(self):
-        """Download historical data for the portfolio and market index (SPY)."""
-        self.portfolio_prices = yf.download(self.portfolio, start=self.start_date, end=self.end_date)['Close']
-        self.market_prices = yf.download('SPY', start=self.start_date, end=self.end_date)['Close']
+class PortfolioOptimizerTool(BaseTool):
+    name = "Portfolio Optimizer using Black-Litterman Model"
+    description = "This tool optimizes a portfolio using the Black-Litterman model and Efficient Frontier optimization without needing initialization."
 
-    def calculate_market_caps(self):
-        """Calculate market capitalizations for the portfolio stocks."""
-        for stock in self.portfolio:
-            ticker = yf.Ticker(stock)
-            self.mcaps[stock] = ticker.info["marketCap"]
-
-    def calculate_sigma(self):
-        """Calculate the covariance matrix for the portfolio."""
-        self.sigma = risk_models.CovarianceShrinkage(self.portfolio_prices).ledoit_wolf()
-
-    def calculate_delta(self):
-        """Calculate the market-implied risk aversion."""
-        self.delta = black_litterman.market_implied_risk_aversion(self.market_prices)
-
-    def setup_black_litterman_model(self):
-        """Setup the Black-Litterman model with the given views and confidences."""
-        variances = [(ub - lb) / 2 for lb, ub in self.confidence]
+    def _run(self, portfolio: List[str], views: Dict[str, float], confidence: List[Tuple[float, float]], start_date: str = '2018-01-01'):
+        """Main method to run the portfolio optimization process."""
+        end_date = datetime.today().strftime('%Y-%m-%d')
+        # Download data
+        portfolio_prices = yf.download(portfolio, start=start_date, end=end_date)['Close']
+        market_prices = yf.download('SPY', start=start_date, end=end_date)['Close']
+        # Calculate market caps
+        mcaps = {stock: yf.Ticker(stock).info["marketCap"] for stock in portfolio}
+        # Calculate sigma (covariance matrix)
+        sigma = risk_models.CovarianceShrinkage(portfolio_prices).ledoit_wolf()
+        # Calculate delta (market-implied risk aversion)
+        delta = black_litterman.market_implied_risk_aversion(market_prices)
+        # Setup Black-Litterman model
+        variances = [(ub - lb) / 2 for lb, ub in confidence]
         omega = np.diag([sigma_ind ** 2 for sigma_ind in variances])
-        self.bl = BlackLittermanModel(self.sigma, pi="market", market_caps=self.mcaps,
-                                      risk_aversion=self.delta, absolute_views=self.views, omega=omega)
-
-    def optimize_portfolio(self):
-        """Optimize the portfolio using the Efficient Frontier method."""
-        ef = EfficientFrontier(self.bl.bl_returns(), self.bl.bl_cov())
+        bl = BlackLittermanModel(sigma, pi="market", market_caps=mcaps, risk_aversion=delta, absolute_views=views, omega=omega)
+        # Optimize portfolio
+        ef = EfficientFrontier(bl.bl_returns(), bl.bl_cov())
         ef.add_objective(objective_functions.L2_reg)
         ef.max_sharpe()
         weights = ef.clean_weights()
         return weights
-
-    def run_optimization(self):
-        """Main method to run the optimization process."""
-        self.download_data()
-        self.calculate_market_caps()
-        self.calculate_sigma()
-        self.calculate_delta()
-        self.setup_black_litterman_model()
-        return self.optimize_portfolio()
+    def _arun(self, portfolio: List[str], views: Dict[str, float], confidence: List[Tuple[float, float]], start_date: str = '2018-01-01'):
+        raise NotImplementedError("This tool does not support async")
+    
